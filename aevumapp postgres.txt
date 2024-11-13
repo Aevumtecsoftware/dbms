@@ -1,0 +1,690 @@
+
+CREATE TABLE IF NOT EXISTS aevumapp."M_CURRENCIES"
+(
+    "CUR_CODE" character varying(12) COLLATE pg_catalog."default" NOT NULL,
+    "CUR_NAME" character varying(240) COLLATE pg_catalog."default" NOT NULL,
+    "CUR_BL_NAME" character varying(240) COLLATE pg_catalog."default",
+    "CUR_SHORT_NAME" character varying(30) COLLATE pg_catalog."default",
+    "CUR_BL_SHORT_NAME" character varying(30) COLLATE pg_catalog."default",
+    "CUR_FRZ_FLAG" boolean,
+    "CUR_CR_UID" character varying(12) COLLATE pg_catalog."default",
+    "CUR_CR_DT" time with time zone,
+    "CUR_UPD_UID" character varying(12) COLLATE pg_catalog."default",
+    "CUR_UPD_DT" time with time zone,
+    CONSTRAINT "M_CURRENCIES_pkey" PRIMARY KEY ("CUR_CODE")
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS aevumapp."M_CURRENCIES"
+    OWNER to postgres;
+
+CREATE TABLE IF NOT EXISTS aevumapp."M_ACNT_PERIODS" 
+   (	"APR_CAL_YEAR" numeric(4,0), 
+	"APR_ACNT_YEAR" numeric(2,0), 
+	"APR_MONTH" numeric(2,0), 
+	"APR_QUARTER" numeric(2,0), 
+	"APR_FM_DT" time with time zone, 
+	"APR_TO_DT" time with time zone
+   )
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS aevumapp."M_ACNT_PERIODS"
+    OWNER to postgres;
+
+
+--------------------------------------------------------
+--  DDL for Table M_DEPARTMENTS
+--------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS aevumapp."M_DEPARTMENTS" 
+   (	"DPT_CMP_CODE" character varying(12), 
+	"DPT_DVN_CODE" character varying(12), 
+	"DPT_CODE" character varying(12), 
+	"DPT_NAME" character varying(240), 
+	"DPT_SHORT_NAME" character varying(30), 
+	"DPT_HEADER" character varying(5), 
+	"DPT_BL_NAME" character varying(240), 
+	"DPT_BL_SHORT_NAME" character varying(30), 
+	"DPT_FRZ_FLAG" character varying(1) DEFAULT 'N', 
+	"DPT_CR_UID" character varying(12), 
+	"DPT_CR_DT" time with time zone, 
+	"DPT_UPD_DT" time with time zone, 
+	"DPT_UPD_UID" character varying(12)
+   )
+
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS aevumapp."M_DEPARTMENTS"
+    OWNER to postgres;
+
+--------------------------------------------------------
+--  DDL for Table M_PRODUCTS
+--------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS aevumapp."M_PRODUCTS" 
+   (	"PROD_CODE" character varying(12), 
+	"PROD_DESC" character varying(240), 
+	"PROD_DESC_BL" character varying(240), 
+	"PROD_SHORT_DESC" character varying(60), 
+	"PROD_SHORT_DESC_BL" character varying(60), 
+	"PROD_LOB_CODE" character varying(12), 
+	"PROD_INST_YN" character varying(1) DEFAULT 0, 
+	"PROD_RATE_BASIS" character varying(12) DEFAULT '01', 
+	"PROD_MIN_RATE" numeric(8,5), 
+	"PROD_MAX_RATE" numeric(8,5), 
+	"PROD_MAX_DISC_PERC" numeric(8,5), 
+	"PROD_INTM_DAYS" numeric(5,0), 
+	"PROD_SI_VALID_YN" character varying(1) DEFAULT 0, 
+	"PROD_EFF_FM_DT" time with time zone, 
+	"PROD_EFF_TO_DT" time with time zone, 
+	"PROD_PARENT_CODE" character varying(12), 
+	"PROD_CR_DT" time with time zone, 
+	"PROD_CR_UID" character varying(12), 
+	"PROD_UPD_DT" time with time zone, 
+	"PROD_UPD_UID" character varying(12),
+  CONSTRAINT "M_PRODUCTS_pkey" PRIMARY KEY ("PROD_CODE")
+
+) 
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS aevumapp."M_PRODUCTS"
+    OWNER to postgres;
+
+--------------------------------------------------------
+--  DDL for Table M_DIVISIONS
+--------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS aevumapp."M_DIVISIONS" 
+   (	"DVN_CMP_CODE" character varying(12), 
+	"DVN_CODE" character varying(12), 
+	"DVN_NAME" character varying(240), 
+	"DVN_SHORT_NAME" character varying(30), 
+	"DVN_HEADER" character varying(5), 
+	"DVN_BL_NAME" character varying(240), 
+	"DVN_BL_SHORT_NAME" character varying(30), 
+	"DVN_FRZ_FLAG" character varying(1) DEFAULT 'N', 
+	"DVN_CR_UID" character varying(12), 
+	"DVN_CR_DT" time with time zone, 
+	"DVN_UPD_DT" time with time zone, 
+	"DVN_UPD_UID" character varying(12)
+   )
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS aevumapp."M_DIVISIONS"
+    OWNER to postgres;
+--------------------------------------------------------
+--  DDL for Table M_APP_PARAMETERS
+--------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS aevumapp."M_APP_PARAMETERS" 
+   (	"PARA_CODE" character varying(12), 
+	"PARA_SUB_CODE" character varying(12), 
+	"PARA_NAME" character varying(1000), 
+	"PARA_NAME_BL" character varying(240), 
+	"PARA_VALUE" character varying(240), 
+	"PARA_REMARK" character varying(4000), 
+	"PARA_REMARK_BL" character varying(4000), 
+	"PARA_CR_UID" character varying(12), 
+	"PARA_CR_DT" time with time zone, 
+	"PARA_UPD_UID" character varying(12), 
+	"PARA_UPD_DT" time with time zone,
+  CONSTRAINT "M_APP_PARAMETERS_pkey" PRIMARY KEY ("PARA_CODE")
+   ) 
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS aevumapp."M_APP_PARAMETERS"
+    OWNER to postgres;
+--------------------------------------------------------
+--  DDL for Table M_PROD_CONDS
+--------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS aevumapp."M_PROD_CONDS" 
+   (	"PRC_SYS_ID" numeric(20), 
+	"PRC_PROD_CODE" character varying(12), 
+	"PRC_CMP_CODE" character varying(12), 
+	"PRC_CODE" character varying(12), 
+	"PRC_CVR_CODE" character varying(12), 
+	"PRC_LVL" character varying(1), 
+	"PRC_TYPE" character varying(12), 
+	"PRC_DFLT_YN" character varying(1), 
+	"PRC_DESC" character varying(240), 
+	"PRC_DESC_BL" character varying(240), 
+	"PRC_SHORT_DESC" character varying(60), 
+	"PRC_SHORT_DESC_BL" character varying(60), 
+	"PRC_LONG_DESC" character varying(4000), 
+	"PRC_LONG_DESC_BL" character varying(4000), 
+	"PRC_VALUE_TYPE"	character varying(1), 
+	"PRC_EFF_FM_DT" time with time zone, 
+	"PRC_EFF_TO_DT" time with time zone, 
+	"PRC_SR_NO" numeric(2,0), 
+	"PRC_CR_DT" time with time zone, 
+	"PRC_CR_UID" character varying(12), 
+	"PRC_UPD_DT" time with time zone, 
+	"PRC_UPD_UID" character varying(12),
+ CONSTRAINT "M_PROD_CONDS_pkey" PRIMARY KEY ("PRC_SYS_ID")
+
+   ) 
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS aevumapp."M_PROD_CONDS"
+    OWNER to postgres;
+--------------------------------------------------------
+--  DDL for Table M_APP_CODES
+--------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS aevumapp."M_APP_CODES" 
+   (	"AC_TYPE" character varying(12), 
+	"AC_CODE" character varying(50), 
+	"AC_VALUE" character varying(240), 
+	"AC_MAIN_CODE" character varying(240), 
+	"AC_MAST_DEF_CODE" character varying(240), 
+	"AC_DESC" character varying(240), 
+	"AC_DESC_BL" character varying(4000), 
+	"AC_SHORT_DESC" character varying(60), 
+	"AC_SHORT_DESC_BL" character varying(60), 
+	"AC_LONG_DESC" character varying(4000), 
+	"AC_LONG_DESC_BL" character varying(4000), 
+	"AC_CODE_BY_LOB_YN" character varying(1), 
+	"AC_LOB_CODE" character varying(12), 
+	"AC_CMP_CODE" character varying(12), 
+	"AC_EFF_FM_DT" time with time zone, 
+	"AC_EFF_TO_DT" time with time zone, 
+	"AC_MAP_CODE" character varying(12),
+	"AC_CR_UID" character varying(12), 
+	"AC_CR_DT" time with time zone, 
+	"AC_UPD_UID" character varying(12), 
+	"AC_UPD_DT" time with time zone,
+ CONSTRAINT "M_APP_CODES_pkey" PRIMARY KEY ("AC_TYPE", "AC_CODE")
+
+) 
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS aevumapp."M_APP_CODES"
+    OWNER to postgres;
+--------------------------------------------------------
+--  DDL for Table M_COMPANIES
+--------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS aevumapp."M_COMPANIES" 
+   (	"CMP_CODE" character varying(12), 
+	"CMP_NAME" character varying(240), 
+	"CMP_SHORT_NAME" character varying(30), 
+	"CMP_LOGO" character varying(60), 
+	"CMP_ADD_1" character varying(240), 
+	"CMP_ADD_2" character varying(240), 
+	"CMP_ADD_3" character varying(240), 
+	"CMP_DFLT_DVN_CODE" character varying(12), 
+	"CMP_DFLT_DPT_CODE" character varying(12), 
+	"CMP_BL_NAME" character varying(240), 
+	"CMP_BL_SHORT_NAME" character varying(30), 
+	"CMP_BL_ADD_1" character varying(240), 
+	"CMP_BL_ADD_2" character varying(240), 
+	"CMP_BL_ADD_3" character varying(240), 
+	"CMP_FRZ_FLAG" character varying(1) DEFAULT 'N', 
+	"CMP_BASE_CUR_CODE_1" character varying(12), 
+	"CMP_BASE_CUR_CODE_2" character varying(12), 
+	"CMP_ROUND_OFF" numeric(1,0), 
+	"CMP_UNIT_NAME" character varying(240), 
+	"CMP_EMAIL_ID" character varying(60), 
+	"CMP_TEL_NO" character varying(60), 
+	"CMP_FAX_NO" character varying(60), 
+	"CMP_CR_UID" character varying(12), 
+	"CMP_CR_DT" time with time zone, 
+	"CMP_UPD_UID" character varying(12), 
+	"CMP_UPD_DT" time with time zone, 
+	"CMP_THEME" character varying(50),
+ CONSTRAINT "M_COMPANIES_pkey" PRIMARY KEY ("CMP_CODE")
+   )
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS aevumapp."M_COMPANIES"
+    OWNER to postgres;
+--------------------------------------------------------
+--  DDL for Table M_USER_FAVORITES
+--------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS aevumapp."M_USER_FAVORITES" 
+   (	"USF_USER_ID" character varying(12), 
+	"USF_ADDS_ID" numeric(20), 
+	"USF_SCR_NAME" character varying(240), 
+	"USF_ACTION" character varying(240) 
+   )
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS aevumapp."M_USER_FAVORITES"
+    OWNER to postgres;
+--------------------------------------------------------
+--  DDL for Table M_MOBILE_USERS
+--------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS aevumapp."M_MOBILE_USERS" 
+   (	"MU_IMEI" character varying(60), 
+	"MU_COUNTRY_CODE" character varying(12), 
+	"MU_NAME" character varying(240), 
+	"MU_MOBILE_NO" character varying(240), 
+	"MU_CIVIL_ID" character varying(20), 
+	"MU_EMAIL_ID" character varying(60), 
+	"MU_LANGUAGE" character varying(1), 
+	"MU_DEVICE_MAKE" character varying(240), 
+	"MU_USER_TYPE" character varying(1), 
+	"MU_MOB_TOKEN" character varying(300), 
+	"MU_PASSWORD" character varying(60), 
+	"MU_LOCKED" character varying(1) DEFAULT '0', 
+	"MU_STATUS" character varying(1) DEFAULT '2', 
+	"MU_PWD_CHNG_DT" time with time zone, 
+	"MU_TOKEN" character varying(300), 
+	"MU_TOKEN_DT" time with time zone, 
+	"MU_EMAIL_OK" character varying(1) DEFAULT '0', 
+	"MU_MOBILE_OK" character varying(1) DEFAULT '0', 
+	"MU_DEVICE_VERSION" character varying(240), 
+	"MU_SESSION_TOKEN" character varying(300), 
+	"MU_LAST_LOGIN_DT" time with time zone, 
+	"MU_RESET_OTP" character varying(6), 
+	"MU_RESET_OTP_FLAG" character varying(1), 
+	"MU_RESET_TRLS" character varying(1), 
+	"MU_RESET_VALID_TILL" time with time zone,
+	"MU_CR_DT" time with time zone, 
+	"MU_CR_UID" character varying(12), 
+	"MU_UPD_DT" time with time zone, 
+	"MU_UPD_UID" character varying(12)
+   )
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS aevumapp."M_MOBILE_USERS"
+    OWNER to postgres;
+--------------------------------------------------------
+--  DDL for Table M_CUSTOMERS
+--------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS aevumapp."M_CUSTOMERS" 
+   (	"CUST_CODE" character varying(12), 
+	"CUST_NAME" character varying(240), 
+	"CUST_NAME_BL" character varying(240), 
+	"CUST_FIRST_NAME" character varying(240), 
+	"CUST_MIDDLE_NAME" character varying(240), 
+	"CUST_LAST_NAME" character varying(240), 
+	"CUST_TITLE" character varying(12), 
+	"CUST_SHORT_NAME" character varying(60), 
+	"CUST_SHORT_NAME_BL" character varying(60), 
+	"CUST_CC_CODE" character varying(12), 
+	"CUST_CC_TYPE" character varying(12), 
+	"CUST_PHONE" character varying(240), 
+	"CUST_PHONE_BL" character varying(240), 
+	"CUST_FAX" character varying(240), 
+	"CUST_FAX_BL" character varying(240), 
+	"CUST_MOBILE_NO" character varying(240), 
+	"CUST_MOBILE_NO_BL" character varying(240), 
+	"CUST_MAILING_ADDR" character varying(1), 
+	"CUST_ADDR_01" character varying(240), 
+	"CUST_ADDR_01_BL" character varying(240), 
+	"CUST_ADDR_02" character varying(240), 
+	"CUST_ADDR_02_BL" character varying(240), 
+	"CUST_ADDR_03" character varying(240), 
+	"CUST_ADDR_03_BL" character varying(240), 
+	"CUST_AREA" character varying(12), 
+	"CUST_REGION" character varying(12), 
+	"CUST_CITY" character varying(12), 
+	"CUST_COUNTRY" character varying(12), 
+	"CUST_OFF_ADDR_01" character varying(240), 
+	"CUST_OFF_ADDR_01_BL" character varying(240), 
+	"CUST_OFF_ADDR_02" character varying(240), 
+	"CUST_OFF_ADDR_02_BL" character varying(240), 
+	"CUST_OFF_ADDR_03" character varying(240), 
+	"CUST_OFF_ADDR_03_BL" character varying(240), 
+	"CUST_OFF_AREA" character varying(12), 
+	"CUST_OFF_REGION" character varying(12), 
+	"CUST_OFF_CITY" character varying(12), 
+	"CUST_OFF_COUNTRY" character varying(12), 
+	"CUST_EMAIL1" character varying(240), 
+	"CUST_EMAIL2" character varying(240), 
+	"CUST_WEB_SITE" character varying(240), 
+	"CUST_CREDIT_CHK_YN" character varying(1), 
+	"CUST_CREDIT_LIMIT" numeric(20,3), 
+	"CUST_CREDIT_DAYS" numeric, 
+	"CUST_EFF_FM_DT" time with time zone, 
+	"CUST_EFF_TO_DT" time with time zone, 
+	"CUST_OFF_PHONE" character varying(240), 
+	"CUST_OFF_PHONE_BL" character varying(240), 
+	"CUST_OFF_FAX" character varying(240), 
+	"CUST_OFF_FAX_BL" character varying(240), 
+	"CUST_PO_BOX" character varying(240), 
+	"CUST_OFF_PO_BOX" character varying(240), 
+	"CUST_GENDER" character varying(12), 
+	"CUST_MARITAL_STS" character varying(12), 
+	"CUST_CIVIL_ID" character varying(60), 
+	"CUST_NATIONALITY" character varying(12), 
+	"CUST_OCC_TYPE" character varying(12), 
+	"CUST_LOGO_NAME" character varying(60), 
+	"CUST_GROUP_CODE" character varying(12), 
+	"CUST_MAKE_FILTER_YN" character varying(1), 
+	"CUST_BODY_FILTER_YN" character varying(1), 
+	"CUST_USAGE_FILTER_YN" character varying(1), 
+	"CUST_CYL_FILTER_YN" character varying(12), 
+	"CUST_MESSAGE" character varying(4000), 
+	"CUST_CR_DT" time with time zone, 
+	"CUST_CR_UID" character varying(12), 
+	"CUST_UPD_DT" time with time zone, 
+	"CUST_UPD_UID" character varying(12), 
+	"CUST_DOC_EMAIL_YN" character varying(1) DEFAULT 0, 
+	"CUST_AGENT_PG_YN" character varying(1) DEFAULT '0', 
+	"CUST_TAX_REF_NO" character varying(60), 
+	"CUST_TAX_GRP_CODE" character varying(12), 
+	"CUST_NAME_SHORT" character varying(1000), 
+	"CUST_LATTITUDE" character varying(100), 
+	"CUST_LONGITUDE" character varying(100),
+ CONSTRAINT "M_CUSTOMERS_pkey" PRIMARY KEY ("CUST_CODE")
+   )
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS aevumapp."M_CUSTOMERS"
+    OWNER to postgres;
+--------------------------------------------------------
+--  DDL for Table M_PROD_FEES
+--------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS aevumapp."M_PROD_FEES" 
+   (	"PSAF_SYS_ID" numeric(10,0), 
+	"PSAF_PROD_CODE" character varying(12), 
+	"PSAF_CMP_CODE" character varying(12), 
+	"PSAF_TRAN_TYPE" character varying(12), 
+	"PSAF_END_TYPE" character varying(12), 
+	"PSAF_CODE" character varying(12), 
+	"PSAF_LVL" character varying(12), 
+	"PSAF_TYPE" character varying(12), 
+	"PSAF_DFLT_YN" character varying(1), 
+	"PSAF_DESC" character varying(240), 
+	"PSAF_DESC_BL" character varying(240), 
+	"PSAF_SHORT_DESC" character varying(60), 
+	"PSAF_SHORT_DESC_BL" character varying(60), 
+	"PSAF_LONG_DESC" character varying(4000), 
+	"PSAF_LONG_DESC_BL" character varying(4000), 
+	"PSAF_VALUE" numeric(20,3), 
+	"PSAF_EFF_FM_DT" time with time zone, 
+	"PSAF_EFF_TO_DT" time with time zone, 
+	"PSAF_CR_DT" time with time zone, 
+	"PSAF_CR_UID" character varying(12), 
+	"PSAF_UPD_DT" time with time zone, 
+	"PSAF_UPD_UID" character varying(12), 
+	"PSAF_CVR_CODE" character varying(12), 
+	"PSAF_ROUND_OFF" character varying(12), 
+	"PSAF_REFUND_APPL_YN" character varying(1) DEFAULT '0'
+   ) 
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS aevumapp."M_PROD_FEES"
+    OWNER to postgres;
+
+--------------------------------------------------------
+--  DDL for Table M_PROD_COVERS
+--------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS aevumapp."M_PROD_COVERS" 
+   (	"PRC_SYS_ID" numeric(10,0), 
+	"PRC_CVR_TYPE" character varying(12), 
+	"PRC_PROD_CODE" character varying(12), 
+	"PRC_COMP_CODE" character varying(12), 
+	"PRC_SCH_CODE" character varying(12), 
+	"PRC_CVR_CODE" character varying(12), 
+	"PRC_CVR_SR_NO" numeric(2,0), 
+	"PRC_LVL" character varying(1), 
+	"PRC_APPL_CVR_CODE" character varying(12), 
+	"PRC_DESC" character varying(240), 
+	"PRC_DESC_BL" character varying(240), 
+	"PRC_SHORT_DESC" character varying(60), 
+	"PRC_SHORT_DESC_BL" character varying(60), 
+	"PRC_HELP_TEXT" character varying(4000), 
+	"PRC_HELP_TEXT_BL" character varying(4000), 
+	"PRC_BASIC_YN" character varying(1), 
+	"PRC_DFLT_YN" character varying(1), 
+	"PRC_MAND_YN" character varying(1), 
+	"PRC_REFUND_YN" character varying(1), 
+	"PRC_CVR_LOGIC" character varying(12), 
+	"PRC_DFLT_TARIFF_YN" character varying(1), 
+	"PRC_ADD_SI_YN" character varying(1), 
+	"PRC_RATE_PER" numeric(23,5), 
+	"PRC_RATE_MODIFY_YN" character varying(1), 
+	"PRC_REN_DFLT_YN" character varying(1), 
+	"PRC_PERIL_CLASS_CODE" character varying(12), 
+	"PRC_SI_DRV_SMI_YN" character varying(1), 
+	"PRC_PAB_DRV_VALUE" numeric(20,3), 
+	"PRC_EFF_FM_DT" time with time zone, 
+	"PRC_EFF_TO_DT" time with time zone, 
+	"PRC_CLM_SI_VALID_YN" character varying(1), 
+	"PRC_POL_DISC_LOAD_RATE" character varying(12), 
+	"PRC_CR_DT" time with time zone, 
+	"PRC_CR_UID" character varying(12), 
+	"PRC_UPD_DT" time with time zone, 
+	"PRC_UPD_UID" character varying(12), 
+	"PRC_ADD_RI_SI_YN" character varying(1), 
+	"PRC_COMM_APPL_YN" character varying(1) DEFAULT 0, 
+	"PRC_ROUND_OFF" character varying(12), 
+	"PRC_MIN_PREM_DISC_YN" character varying(1),
+ CONSTRAINT "M_PROD_COVERS_pkey" PRIMARY KEY ("PRC_SYS_ID")
+   )
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS aevumapp."M_PROD_COVERS"
+    OWNER to postgres;
+--------------------------------------------------------
+--  DDL for Table M_MENUS
+--------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS aevumapp."M_MENUS" 
+   (	"MENU_ID" character varying(20), 
+	"MENU_PARENT_ID" character varying(20), 
+	"MENU_SR_NO" numeric(10,0), 
+	"MENU_SCR_NAME" character varying(240), 
+	"MENU_DESCRIPTION" character varying(2000), 
+	"MENU_ACTION" character varying(240), 
+	"MENU_TYPE" character varying(240), 
+	"MENU_PARAMETER_1" character varying(240), 
+	"MENU_PARAMETER_2" character varying(240), 
+	"MENU_PARAMETER_3" character varying(240), 
+	"MENU_PARAMETER_4" character varying(240), 
+	"MENU_PARAMETER_5" character varying(240), 
+	"MENU_HELP_TEXT" character varying(12), 
+	"MENU_CR_UID" character varying(12), 
+	"MENU_CR_DT" time with time zone, 
+	"MENU_UPD_UID" character varying(12), 
+	"MENU_UPD_DT" time with time zone, 
+	"MENU_ICON" character varying(240)
+   )
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS aevumapp."M_MENUS"
+    OWNER to postgres;
+--------------------------------------------------------
+--  DDL for Table M_PROD_DEDS
+--------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS aevumapp."M_PROD_DEDS" 
+   (	"PSAD_SYS_ID" numeric(10,0), 
+	"PSAD_PROD_CODE" character varying(12), 
+	"PSAD_CMP_CODE" character varying(12), 
+	"PSAD_CODE" character varying(12), 
+	"PSAD_CVR_CODE" character varying(12), 
+	"PSAD_LVL" character varying(1), 
+	"PSAD_TYPE" character varying(12), 
+	"PSAD_DFLT_YN" character varying(1), 
+	"PSAD_DESC" character varying(240), 
+	"PSAD_DESC_BL" character varying(240), 
+	"PSAD_SHORT_DESC" character varying(60), 
+	"PSAD_SHORT_DESC_BL" character varying(60), 
+	"PSAD_LONG_DESC" character varying(4000), 
+	"PSAD_LONG_DESC_BL" character varying(4000), 
+	"PSAD_DFLT_VALUE" numeric(20,3), 
+	"PSAD_EFF_FM_DT" time with time zone, 
+	"PSAD_EFF_TO_DT" time with time zone, 
+	"PSAD_CR_DT" time with time zone, 
+	"PSAD_CR_UID" character varying(12), 
+	"PSAD_UPD_DT" time with time zone, 
+	"PSAD_UPD_UID" character varying(12)
+   ) 
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS aevumapp."M_PROD_DEDS"
+    OWNER to postgres;
+--------------------------------------------------------
+--  DDL for Table M_PROD_SMI
+--------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS aevumapp."M_PROD_SMI" 
+   (	"PSMI_SYS_ID" numeric(10,0), 
+	"PSMI_PROD_CODE" character varying(12), 
+	"PSMI_CMP_CODE" character varying(12), 
+	"PSMI_LVL" character varying(1), 
+	"PSMI_SMI_CODE" character varying(12), 
+	"PSMI_SMI_DESC" character varying(240), 
+	"PSMI_CVR_CODE" character varying(12), 
+	"PSMI_ADD_SI_YN" character varying(1), 
+	"PSMI_DEFAULT_YN" character varying(1), 
+	"PSMI_CR_DT" time with time zone, 
+	"PSMI_CR_UID" character varying(12), 
+	"PSMI_UPD_DT" time with time zone, 
+	"PSMI_UPD_UID" character varying(12), 
+	"PSMI_EFF_FM_DT" time with time zone, 
+	"PSMI_EFF_TO_DT" time with time zone
+   )
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS aevumapp."M_PROD_SMI"
+    OWNER to postgres;
+--------------------------------------------------------
+--  DDL for Table M_PROMO_CODES
+--------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS aevumapp."M_PROMO_CODES" 
+   (	"PC_PROMO_CODE" character varying(12), 
+	"PC_PROD_TYPE" character varying(12), 
+	"PC_PROMO_GROUP" character varying(12), 
+	"PC_TYPE" character varying(1) DEFAULT 'S', 
+	"PC_LOGIC" character varying(12), 
+	"PC_DISC_CODE" character varying(12), 
+	"PC_DISC_PERC" numeric(20,3), 
+	"PC_EFF_FM_DT" time with time zone, 
+	"PC_EFF_TO_DT" time with time zone, 
+	"PC_MAX_ALLOWED" numeric(10,0) DEFAULT 1, 
+	"PC_CR_UID" character varying(12), 
+	"PC_CR_DT" time with time zone, 
+	"PC_CUR_TXN_CNT" numeric(10,0) DEFAULT 0, 
+	"PC_TXN_REF" character varying(60), 
+	"PC_TXN_DT" time with time zone, 
+	"PC_TXN_UID" character varying(12), 
+	"PC_TXN_PREM" numeric(20,3) DEFAULT 0, 
+	"PC_TXN_DISC" numeric(20,3) DEFAULT 0 
+   )
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS aevumapp."M_PROMO_CODES"
+    OWNER to postgres;
+--------------------------------------------------------
+--  DDL for Table M_PROMO_DETAILS
+--------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS aevumapp."M_PROMO_DETAILS" 
+   (	"PD_PROMO_CODE" character varying(12), 
+	"PD_PROD_TYPE" character varying(12), 
+	"PD_TXN_REF" character varying(60), 
+	"PD_TXN_DT" time with time zone, 
+	"PD_TXN_UID" character varying(12), 
+	"PD_TXN_PREM" numeric(20,3) DEFAULT 0, 
+	"PD_TXN_DISC" numeric(20,3) DEFAULT 0, 
+	"PD_FLEX_01" character varying(240), 
+	"PD_FLEX_02" character varying(240), 
+	"PD_FLEX_03" character varying(240), 
+	"PD_FLEX_04" character varying(240), 
+	"PD_FLEX_05" character varying(240)
+   )
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS aevumapp."M_PROMO_DETAILS"
+    OWNER to postgres;
+
+
+--------------------------------------------------------
+--  DDL for Table T_ADDS
+--------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS aevumapp."T_ADDS" 
+   (	"ADD_ID" 	 numeric(20) NOT NULL, 
+	"ADD_LOB_CODE"   character varying(50) NOT NULL, 
+	"ADD_PROD_CODE"   character varying(50) NOT NULL, 
+	"ADD_YEAR" 	  numeric(4) NOT NULL, 
+	"ADD_TYPE" character varying(240) NOT NULL, 
+	"ADD_TITLE" 	 character varying(240) NOT NULL,
+	"ADD_DESCRIPTION" character varying(2000) NOT NULL, 
+	"ADD_CUST_CODE" character varying(20) NOT NULL, 
+	"ADD_SOURCE" character varying(240) NOT NULL, 
+	"ADD_ACTION" 		character varying(240) NOT NULL, 
+	"ADD_PRICE" 		numeric(18,3) NOT NULL, 
+	"ADD_DT" 		time with time zone, 
+	"ADD_PARAMETER_1" character varying(240), 
+	"ADD_PARAMETER_2" character varying(240), 
+	"ADD_PARAMETER_3" character varying(240), 
+	"ADD_PARAMETER_4" character varying(240), 
+	"ADD_PARAMETER_5" character varying(240), 
+	"ADD_HELP_TEXT"   character varying(12), 
+	"ADD_COUNTRY_CODE"   	character varying(50), 
+	"ADD_CITY_CODE"		character varying(50), 
+	"ADD_LATTITUDE" character varying(100), 
+	"ADD_LONGITUDE" character varying(100),
+	"ADD_PHOTO_1" character varying(240),
+	"ADD_PHOTO_2" character varying(240),
+	"ADD_PHOTO_3" character varying(240),
+	"ADD_PHOTO_4" character varying(240),
+	"ADD_PHOTO_5" character varying(240),
+	"ADD_PHOTO_6" character varying(240),
+	"ADD_PHOTO_7" character varying(240),
+	"ADD_PHOTO_8" character varying(240),
+	"ADD_PHOTO_9" character varying(240),
+	"ADD_PHOTO_10" character varying(240),
+	"ADD_CR_UID" character varying(12), 
+	"ADD_CR_DT" time with time zone, 
+	"ADD_UPD_UID" character varying(12), 
+	"ADD_UPD_DT" time with time zone,
+ CONSTRAINT "T_ADDS_pkey" PRIMARY KEY ("ADD_ID")
+   )
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS aevumapp."T_ADDS"
+    OWNER to postgres;
+
+--------------------------------------------------------
+--  DDL for Table T_ADDS_CONDS
+--------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS aevumapp."T_ADD_CONDS" 
+   (	"ADC_ADD_ID" 		numeric(20) NOT NULL, 
+	"ADC_COND_ID"   	numeric(20) NOT NULL, 
+	"ADC_COND_VALUE"   	VARCHAR(240) NOT NULL,
+	"ADC_CR_UID" 		character varying(12) NOT NULL, 
+	"ADC_CR_DT" 		time with time zone NOT NULL, 
+	"ADC_UPD_UID" 		character varying(12), 
+	"ADC_UPD_DT" 		time with time zone
+   )
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS aevumapp."M_ADD_CONDS"
+    OWNER to postgres;
+
+
